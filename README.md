@@ -4,7 +4,7 @@ Install package (install beforehand Python and MongoDB)
 ```
 pip install fastapi pymongo uvicorn
 ```
-Setup env
+Setup virtual env
 ```
 virtualenv venv
 OR
