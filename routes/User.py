@@ -9,14 +9,14 @@ user = APIRouter()
 
 
 # Get/Query All User
-@user.get('/')
+@user.get('/users')
 async def find_All_Users():
     print(serializeList(connectDB.local.user.find()))
     return serializeList(connectDB.local.user.find())
 
 
 # Get/Query User by ID
-@user.get('/{id}')
+@user.get('/users/{id}')
 async def find_One_User(id: str):
     print(serializeDict(connectDB.local.user.find_one({"_id": ObjectId(id)})))
     # No Error handling if 'ID' doesn't exist
@@ -26,15 +26,15 @@ async def find_One_User(id: str):
 
 
 # Create User
-@user.post('/')
+@user.post('/users')
 async def create_User(user: User):
     connectDB.local.user.insert_one(dict(user))
-    print(serializeList(connectDB.local.user.find()))
+    # print(serializeList(connectDB.local.user.find()))
     return serializeList(connectDB.local.user.find())
 
 
 # Update User
-@user.put('/{id}')
+@user.put('/users/{id}')
 async def update_User(id, user: User):
     connectDB.local.user.find_one_and_update({"_id": ObjectId(id)},
                                              {"$set": dict(user)})
@@ -43,7 +43,7 @@ async def update_User(id, user: User):
 
 
 # Delete User
-@user.delete('/{id}')
+@user.delete('/users/{id}')
 async def delete_User(id):
     # When using 'serializeDict' for delete, 500 Internal Server Error occurs
     # Using 'userEntity' instead
